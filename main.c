@@ -19,11 +19,15 @@ int main()
 {
 	char * test_1 = "\x4D\xC3\xAC\x6E\x68\x20\x6E\xC3\xB3\x69\x20\x74\x69\xE1\xBA\xBF\x6E\x67\x20\x56\x69\xE1\xBB\x87\x74";
 	char * test_2 = "\xF0\xA8\x89\x9F\xE5\x91\x90\xE3\x97\x82\xE8\xB6\x8A\x21\x21";
+	char * test_3 = "\x24\xC2\xA3\xD0\x98\xE0\xA4\xB9\xE2\x82\xAC\xED\x95\x9C\xF0\x90\x8D\x88";
 	printf("Hi there.\nThis cannot be displayed: %s\nBut that's actually what I wanted to do.\n\nNor shall this: %s\n\n",test_1, test_2);
+	printf("Hmm: %s\n",test_3);
 	printf("---Test #1---\n");
 	utf8_read(test_1);
 	printf("\n---Test #2---\n");
 	utf8_read(test_2);
+	printf("\n---Test #3---\n");
+	utf8_read(test_3);
 	return 0;
 }
 
@@ -36,15 +40,15 @@ void utf8_read(const char * str)
 	b_len=0;
 	for (i=0;i<strlen(str);i++)
 	{
-		printf("%d: %c",i,str[i]);
+		printf("%d: %c",i,str[i],str[i]);
 		if ((unsigned char) str[i]>0x7F)
 		{
 			printf(" <SPECIAL>");
 			printf("\n");
 			b[0]=char2bin((unsigned char) str[i]);
 			type=bin_chartype(b[0]);
-			//bin_display(s);
 			printf("Type: %d\n",type);
+			n=0;
 			switch(type)
 			{
 			default:
@@ -150,7 +154,7 @@ void utf8_read(const char * str)
 		else
 			printf("[%X]\n\n",n);
 	}
-	printf("\nLength: %d\n",len);
+	printf("Length: %d\n",len);
 }
 
 BIN_T char2bin(const unsigned char input)
